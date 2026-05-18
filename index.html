@@ -2,388 +2,575 @@
 <html lang="pl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Wszystkiego Najlepszego Tymek! 🎂</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Tymek 🎂">
+  <meta name="theme-color" content="#07071a">
+  <meta name="description" content="Wszystkiego Najlepszego Tymek! 10 urodziny 🎉">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="assets/img/icon-192.png">
+  <title>Wszystkiego Najlepszego Tymek! 🎉</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Baloo+2:wght@700;800&display=swap" rel="stylesheet">
+
   <style>
     :root {
-      --pink:    #ff6b9d;
-      --yellow:  #ffe066;
-      --orange:  #ff9b3d;
-      --blue:    #5bc8f5;
-      --purple:  #c084fc;
-      --green:   #6ee7a0;
-      --cream:   #fff8f0;
-      --dark:    #2d1a4b;
+      --safe-t: env(safe-area-inset-top,    0px);
+      --safe-b: env(safe-area-inset-bottom, 0px);
+      --safe-l: env(safe-area-inset-left,   0px);
+      --safe-r: env(safe-area-inset-right,  0px);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    html, body {
-      width: 100%; height: 100%;
+    html { overflow: hidden; height: 100%; height: -webkit-fill-available; }
+
+    body {
+      width: 100%; height: 100%; height: -webkit-fill-available;
       overflow: hidden;
-      background: var(--cream);
+      background: #07071a;
       font-family: 'Baloo 2', cursive;
+      padding: var(--safe-t) var(--safe-r) var(--safe-b) var(--safe-l);
+      -webkit-tap-highlight-color: transparent;
     }
 
-    /* ── BACKGROUND ── */
-    body::before {
-      content: '';
-      position: fixed; inset: 0;
-      background:
-        radial-gradient(ellipse 80% 60% at 50% 110%, #ffe8f7 0%, transparent 70%),
-        radial-gradient(ellipse 60% 40% at 80% 0%, #e8f4ff 0%, transparent 60%),
-        radial-gradient(ellipse 60% 40% at 20% 0%, #fff3e0 0%, transparent 60%),
-        var(--cream);
-      z-index: 0;
+    /* ── FIREWORKS fills entire background ── */
+    #fw {
+      position: fixed; inset: 0; z-index: 0;
+      width: 100% !important; height: 100% !important;
     }
 
-    /* ── LAYOUT ── */
+    /* ── SCENE on top ── */
     .scene {
-      position: relative; z-index: 1;
-      width: 100%; height: 100vh;
+      position: relative; z-index: 2;
+      width: 100%; height: 100vh; height: 100dvh;
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
+      pointer-events: none;
+      padding: max(8px,1vh) 14px max(10px,1.2vh);
       gap: 0;
     }
 
     /* ── TITLE ── */
     .title {
       font-family: 'Fredoka One', cursive;
-      font-size: clamp(2rem, 7vw, 5.5rem);
-      color: var(--dark);
+      font-size: clamp(2.2rem, 8vw, 6.2rem);
+      line-height: 1.06;
       text-align: center;
-      line-height: 1.1;
-      margin-bottom: 8px;
-      animation: titleIn 1s cubic-bezier(.34,1.56,.64,1) both;
-      letter-spacing: .02em;
-      position: relative;
+      margin-bottom: clamp(4px, 1vh, 14px);
     }
-    .title span {
+
+    .t1 {
+      display: block;
+      color: #fff;
+      text-shadow:
+        0 0 20px rgba(255,220,100,.5),
+        0 0 60px rgba(255,120,180,.3);
+      animation: glowPulse 3s ease-in-out infinite;
+    }
+    @keyframes glowPulse {
+      0%,100% { text-shadow: 0 0 20px rgba(255,220,100,.5), 0 0 60px rgba(255,120,180,.3); }
+      50%     { text-shadow: 0 0 50px rgba(255,220,100,.9), 0 0 100px rgba(255,120,180,.6); }
+    }
+
+    .t2 {
+      display: block;
+      filter: drop-shadow(0 0 22px rgba(255,180,60,.8));
+    }
+
+    /* letter entrance */
+    .t1 .ch {
       display: inline-block;
-      background: linear-gradient(135deg, var(--pink), var(--orange), var(--purple));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      opacity: 0;
+      color: #fff;
+      animation: letterIn .55s cubic-bezier(.34,1.56,.64,1) forwards;
+    }
+    .t2 .ch {
+      display: inline-block;
+      opacity: 0;
+      background: linear-gradient(125deg, #ffe066 0%, #ff9b3d 50%, #ff6b9d 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
       background-clip: text;
+      animation: letterIn .55s cubic-bezier(.34,1.56,.64,1) forwards;
+    }
+    @keyframes letterIn {
+      from { opacity:0; transform: translateY(-50px) rotate(-20deg) scale(.4); }
+      to   { opacity:1; transform: none; }
     }
 
-    @keyframes titleIn {
-      from { opacity: 0; transform: translateY(-40px) scale(.8); }
-      to   { opacity: 1; transform: none; }
+    /* ── ANIMATED "10 lat" ── */
+    .ten {
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      gap: clamp(2px, 1vw, 10px);
+      margin-bottom: clamp(8px, 2vh, 22px);
+      animation: badgePop 1s 1.6s cubic-bezier(.34,1.56,.64,1) both;
     }
-
-    /* ── SUBTITLE ── */
-    .sub {
+    @keyframes badgePop {
+      from { opacity:0; transform: scale(.2) rotate(-20deg); }
+      to   { opacity:1; transform: none; }
+    }
+    .ten-d {
       font-family: 'Fredoka One', cursive;
-      font-size: clamp(1.6rem, 5vw, 3.8rem);
-      color: var(--purple);
+      font-size: clamp(4rem, 18vw, 12rem);
+      line-height: .9;
+      display: inline-block;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      -webkit-background-clip: text;
+      animation: digitFloat 3s ease-in-out infinite, digitGlow 2s ease-in-out infinite alternate;
+    }
+    #d1 {
+      background-image: linear-gradient(170deg, #fff 0%, #ffe066 40%, #ff9b3d 100%);
+      animation-delay: 0s, 0s;
+      filter: drop-shadow(0 0 12px rgba(255,200,80,.7));
+    }
+    #d0 {
+      background-image: linear-gradient(170deg, #ff9b3d 0%, #ff6b9d 50%, #c084fc 100%);
+      animation-delay: .35s, .4s;
+      filter: drop-shadow(0 0 12px rgba(200,80,255,.7));
+    }
+    @keyframes digitFloat {
+      0%,100% { transform: translateY(0)   rotate(-2deg) scale(1); }
+      50%     { transform: translateY(-12px) rotate(2deg)  scale(1.04); }
+    }
+    @keyframes digitGlow {
+      from { filter: drop-shadow(0 0 10px rgba(255,200,80,.5))  drop-shadow(0 0 30px rgba(255,150,60,.3)); }
+      to   { filter: drop-shadow(0 0 25px rgba(255,220,100,.9)) drop-shadow(0 0 60px rgba(255,100,180,.6)); }
+    }
+    .ten-lat {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(1.4rem, 5.5vw, 3.8rem);
+      color: rgba(255,255,255,.85);
+      margin-left: clamp(4px, 1vw, 12px);
+      padding-bottom: clamp(.3rem, 1vw, .6rem);
+      text-shadow: 0 0 20px rgba(255,200,100,.6);
+      animation: digitFloat 3s .6s ease-in-out infinite;
+    }
+
+    /* ── MESSAGE ── */
+    .msg-wrap {
+      width: 100%;
+      max-width: clamp(280px, 84vw, 640px);
+      animation: fadeUp 1s 2.8s both;
+    }
+    @keyframes fadeUp {
+      from { opacity:0; transform: translateY(24px); }
+      to   { opacity:1; transform: none; }
+    }
+    .msg {
+      background: rgba(255,255,255,.07);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1.5px solid rgba(255,255,255,.15);
+      border-radius: 22px;
+      padding: clamp(12px,2.2vh,20px) clamp(16px,3.5vw,32px);
       text-align: center;
-      animation: titleIn 1s .2s cubic-bezier(.34,1.56,.64,1) both;
-      margin-bottom: clamp(12px, 3vw, 28px);
+    }
+    .msg p {
+      font-size: clamp(.82rem, 2.4vw, 1.18rem);
+      font-weight: 700;
+      color: rgba(255,255,255,.92);
+      line-height: 1.55;
+    }
+    .msg p + p { margin-top: .5em; }
+    .msg .hl  { color: #ffe066; }
+    .msg .hl2 { color: #a0f5c8; }
+    .msg .code {
+      font-family: 'Courier New', monospace;
+      background: rgba(255,224,102,.15);
+      border: 1px solid rgba(255,224,102,.35);
+      border-radius: 6px;
+      padding: 1px 7px;
+      font-size: .88em;
+      color: #ffe066;
     }
 
-    /* ── CAKE WRAPPER ── */
-    .cake-wrap {
-      animation: cakeIn 1.1s .4s cubic-bezier(.34,1.56,.64,1) both;
+    /* landscape */
+    @media (max-height: 480px) and (orientation: landscape) {
+      .title      { font-size: clamp(1.3rem, 5.5vh, 2.6rem); }
+      .ten-d      { font-size: clamp(2.5rem, 10vh, 5rem); }
+      .ten-lat    { font-size: clamp(.9rem, 3.5vh, 1.6rem); }
+      .ten        { margin-bottom: 4px; }
+      .msg p      { font-size: clamp(.68rem, 2vh, .9rem); }
+      .msg        { padding: 8px 16px; }
     }
-    @keyframes cakeIn {
-      from { opacity: 0; transform: scale(.4) rotate(-8deg); }
-      to   { opacity: 1; transform: none; }
-    }
-
-    /* ── SVG CAKE ── */
-    #cake-svg {
-      width: clamp(240px, 50vw, 480px);
-      height: auto;
-      filter: drop-shadow(0 20px 40px rgba(180,80,160,.25));
-    }
-
-    /* candle flames */
-    .flame { transform-origin: center bottom; }
-    @keyframes flicker1 {
-      0%,100%{ transform: scaleX(1)   scaleY(1)   rotate(0deg); }
-      25%    { transform: scaleX(.85) scaleY(1.15) rotate(-4deg); }
-      50%    { transform: scaleX(1.1) scaleY(.9)  rotate(3deg); }
-      75%    { transform: scaleX(.9)  scaleY(1.1) rotate(-2deg); }
-    }
-    @keyframes flicker2 {
-      0%,100%{ transform: scaleX(1)   scaleY(1)   rotate(0deg); }
-      33%    { transform: scaleX(1.1) scaleY(.88) rotate(5deg); }
-      66%    { transform: scaleX(.88) scaleY(1.1) rotate(-3deg); }
-    }
-    .f1 { animation: flicker1 .7s ease-in-out infinite; }
-    .f2 { animation: flicker2 .9s .15s ease-in-out infinite; }
-    .f3 { animation: flicker1 .6s .3s ease-in-out infinite; }
-    .f4 { animation: flicker2 .8s .05s ease-in-out infinite; }
-    .f5 { animation: flicker1 .75s .2s ease-in-out infinite; }
-    .f6 { animation: flicker2 .65s .1s ease-in-out infinite; }
-    .f7 { animation: flicker1 .85s .35s ease-in-out infinite; }
-    .f8 { animation: flicker2 .7s .25s ease-in-out infinite; }
-    .f9 { animation: flicker1 .6s .4s ease-in-out infinite; }
-    .f10{ animation: flicker2 .8s .05s ease-in-out infinite; }
-
-    /* cake bounce */
-    #cake-svg { animation: cakeFloat 4s ease-in-out infinite; }
-    @keyframes cakeFloat {
-      0%,100%{ filter: drop-shadow(0 20px 40px rgba(180,80,160,.25)); transform: translateY(0); }
-      50%    { filter: drop-shadow(0 30px 50px rgba(180,80,160,.35)); transform: translateY(-10px); }
-    }
-
-    /* ── CONFETTI ── */
-    #confetti-canvas {
-      position: fixed; inset: 0;
-      pointer-events: none; z-index: 10;
-    }
-
-    /* ── STARS / SPARKLES ── */
-    .sparkle {
-      position: fixed;
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 5;
-      animation: sparklePop var(--dur) var(--delay) ease-out infinite;
-    }
-    @keyframes sparklePop {
-      0%   { opacity: 0; transform: scale(0); }
-      20%  { opacity: 1; transform: scale(1.4); }
-      60%  { opacity: .8; }
-      100% { opacity: 0; transform: scale(.2) translateY(-20px); }
+    @media (max-width: 360px) {
+      .title  { font-size: 2rem; }
+      .ten-d  { font-size: 3.8rem; }
     }
   </style>
 </head>
 <body>
 
-<canvas id="confetti-canvas"></canvas>
+<canvas id="fw"></canvas>
 
 <div class="scene">
-  <h1 class="title">Wszystkiego<br><span>Najlepszego</span></h1>
-  <p class="sub">🎉 Tymek! 🎉</p>
 
-  <div class="cake-wrap">
-    <svg id="cake-svg" viewBox="0 0 400 320" xmlns="http://www.w3.org/2000/svg">
-      <!-- ── PLATE ── -->
-      <ellipse cx="200" cy="295" rx="145" ry="14" fill="#e8c9a0" opacity=".6"/>
+  <h1 class="title">
+    <span class="t1" id="l1"></span>
+    <span class="t2" id="l2"></span>
+  </h1>
 
-      <!-- ── BOTTOM TIER ── -->
-      <rect x="60" y="220" width="280" height="70" rx="8" fill="#ff9b6b"/>
-      <ellipse cx="200" cy="220" rx="140" ry="12" fill="#ffb98a"/>
-      <ellipse cx="200" cy="290" rx="140" ry="11" fill="#e0855a"/>
-      <!-- polka dots bottom -->
-      <circle cx="110" cy="252" r="9" fill="#ffe066" opacity=".8"/>
-      <circle cx="160" cy="240" r="7" fill="#fff" opacity=".7"/>
-      <circle cx="210" cy="258" r="10" fill="#ff6b9d" opacity=".8"/>
-      <circle cx="265" cy="243" r="7" fill="#c084fc" opacity=".8"/>
-      <circle cx="305" cy="258" r="8" fill="#5bc8f5" opacity=".8"/>
-      <circle cx="140" cy="270" r="6" fill="#6ee7a0" opacity=".8"/>
-      <circle cx="240" cy="272" r="7" fill="#ffe066" opacity=".7"/>
-      <circle cx="330" cy="240" r="6" fill="#ff6b9d" opacity=".7"/>
-      <!-- frosting drips bottom -->
-      <path d="M80 220 Q90 210 100 220 Q110 210 120 220 Q130 210 140 220 Q150 210 160 220 Q170 210 180 220 Q190 210 200 220 Q210 210 220 220 Q230 210 240 220 Q250 210 260 220 Q270 210 280 220 Q290 210 300 220 Q310 210 320 220" fill="#fff8f0" stroke="none"/>
-      <path d="M80 220 Q90 232 100 220 Q110 232 120 220 Q130 232 140 220 Q150 232 160 220 Q170 232 180 220 Q190 232 200 220 Q210 232 220 220 Q230 232 240 220 Q250 232 260 220 Q270 232 280 220 Q290 232 300 220 Q310 232 320 220" fill="#fff8f0"/>
-
-      <!-- ── MIDDLE TIER ── -->
-      <rect x="90" y="155" width="220" height="70" rx="8" fill="#5bc8f5"/>
-      <ellipse cx="200" cy="155" rx="110" ry="11" fill="#7dd8f7"/>
-      <ellipse cx="200" cy="225" rx="110" ry="10" fill="#3da8d5"/>
-      <!-- stars on middle -->
-      <text x="115" y="200" font-size="18" fill="#fff" opacity=".9">★</text>
-      <text x="150" y="188" font-size="14" fill="#ffe066" opacity=".9">✦</text>
-      <text x="190" y="202" font-size="20" fill="#fff" opacity=".85">★</text>
-      <text x="235" y="192" font-size="14" fill="#ffe066">✦</text>
-      <text x="265" y="204" font-size="16" fill="#fff" opacity=".9">★</text>
-      <!-- frosting drips mid -->
-      <path d="M100 155 Q110 167 120 155 Q130 167 140 155 Q150 167 160 155 Q170 167 180 155 Q190 167 200 155 Q210 167 220 155 Q230 167 240 155 Q250 167 260 155 Q270 167 280 155 Q290 167 300 155" fill="#fff8f0"/>
-
-      <!-- ── TOP TIER ── -->
-      <rect x="125" y="95" width="150" height="65" rx="8" fill="#c084fc"/>
-      <ellipse cx="200" cy="95" rx="75" ry="9" fill="#d4a0ff"/>
-      <ellipse cx="200" cy="160" rx="75" ry="8" fill="#a060d0"/>
-      <!-- hearts top -->
-      <text x="148" y="135" font-size="22" fill="#ff6b9d">♥</text>
-      <text x="183" y="128" font-size="16" fill="#ffe066">♥</text>
-      <text x="213" y="138" font-size="20" fill="#fff" opacity=".9">♥</text>
-      <!-- frosting drips top -->
-      <path d="M133 95 Q140 106 147 95 Q154 106 161 95 Q168 106 175 95 Q182 106 189 95 Q196 106 203 95 Q210 106 217 95 Q224 106 231 95 Q238 106 245 95 Q252 106 259 95 Q266 106 273 95" fill="#fff8f0"/>
-
-      <!-- "10" on cake -->
-      <text x="175" y="145" font-family="Fredoka One, cursive" font-size="30" fill="#fff" opacity=".95" text-anchor="middle">10</text>
-
-      <!-- ── CANDLES (10) ── -->
-      <!-- candle body + flame helper -->
-      <!-- positions: x values for 10 candles spread across top -->
-      <!-- row of 10 candles above top tier -->
-
-      <!-- candle 1 -->
-      <rect x="136" y="64" width="10" height="33" rx="4" fill="#ff6b9d"/>
-      <ellipse cx="141" cy="65" rx="5" ry="3" fill="#ff9b3d"/>
-      <g class="flame f1"><ellipse cx="141" cy="58" rx="5" ry="8" fill="#ffe066" opacity=".9"/>
-        <ellipse cx="141" cy="60" rx="3" ry="5" fill="#ff9b3d" opacity=".8"/></g>
-
-      <!-- candle 2 -->
-      <rect x="150" y="60" width="10" height="37" rx="4" fill="#ffe066"/>
-      <ellipse cx="155" cy="61" rx="5" ry="3" fill="#ff9b3d"/>
-      <g class="flame f2"><ellipse cx="155" cy="54" rx="5" ry="8" fill="#ffe066" opacity=".9"/>
-        <ellipse cx="155" cy="56" rx="3" ry="5" fill="#ff6b9d" opacity=".8"/></g>
-
-      <!-- candle 3 -->
-      <rect x="164" y="62" width="10" height="35" rx="4" fill="#5bc8f5"/>
-      <ellipse cx="169" cy="63" rx="5" ry="3" fill="#3da8d5"/>
-      <g class="flame f3"><ellipse cx="169" cy="56" rx="5" ry="8" fill="#ffe066" opacity=".9"/>
-        <ellipse cx="169" cy="58" rx="3" ry="5" fill="#ff9b3d" opacity=".8"/></g>
-
-      <!-- candle 4 -->
-      <rect x="178" y="58" width="10" height="39" rx="4" fill="#6ee7a0"/>
-      <ellipse cx="183" cy="59" rx="5" ry="3" fill="#40c070"/>
-      <g class="flame f4"><ellipse cx="183" cy="52" rx="5" ry="8" fill="#ffe066" opacity=".9"/>
-        <ellipse cx="183" cy="54" rx="3" ry="5" fill="#ff6b9d" opacity=".8"/></g>
-
-      <!-- candle 5 -->
-      <rect x="192" y="61" width="10" height="36" rx="4" fill="#ff9b3d"/>
-      <ellipse cx="197" cy="62" rx="5" ry="3" fill="#e07830"/>
-      <g class="flame f5"><ellipse cx="197" cy="55" rx="5" ry="8" fill="#ffe066" opacity=".9"/>
-        <ellipse cx="197" cy="57" rx="3" ry="5" fill="#c084fc" opacity=".8"/></g>
-
-      <!-- candle 6 -->
-      <rect x="206" y="59" width="10" height="38" rx="4" fill="#c084fc"/>
-      <ellipse cx="211" cy="60" rx="5" ry="3" fill="#a060d0"/>
-      <g class="flame f6"><ellipse cx="211" cy="53" rx="5" ry="8" fill="#ffe066" opacity=".9"/>
-        <ellipse cx="211" cy="55" rx="3" ry="5" fill="#5bc8f5" opacity=".8"/></g>
-
-      <!-- candle 7 -->
-      <rect x="220" y="63" width="10" height="34" rx="4" fill="#ff6b9d"/>
-      <ellipse cx="225" cy="64" rx="5" ry="3" fill="#e04070"/>
-      <g class="flame f7"><ellipse cx="225" cy="57" rx="5" ry="8" fill="#ffe066" opacity=".9"/>
-        <ellipse cx="225" cy="59" rx="3" ry="5" fill="#6ee7a0" opacity=".8"/></g>
-
-      <!-- candle 8 -->
-      <rect x="234" y="60" width="10" height="37" rx="4" fill="#ffe066"/>
-      <ellipse cx="239" cy="61" rx="5" ry="3" fill="#e0c030"/>
-      <g class="flame f8"><ellipse cx="239" cy="54" rx="5" ry="8" fill="#ffe066" opacity=".9"/>
-        <ellipse cx="239" cy="56" rx="3" ry="5" fill="#ff9b3d" opacity=".8"/></g>
-
-      <!-- candle 9 -->
-      <rect x="248" y="64" width="10" height="33" rx="4" fill="#5bc8f5"/>
-      <ellipse cx="253" cy="65" rx="5" ry="3" fill="#3da8d5"/>
-      <g class="flame f9"><ellipse cx="253" cy="58" rx="5" ry="8" fill="#ffe066" opacity=".9"/>
-        <ellipse cx="253" cy="60" rx="3" ry="5" fill="#ff6b9d" opacity=".8"/></g>
-
-      <!-- candle 10 -->
-      <rect x="262" y="61" width="10" height="36" rx="4" fill="#6ee7a0"/>
-      <ellipse cx="267" cy="62" rx="5" ry="3" fill="#40c070"/>
-      <g class="flame f10"><ellipse cx="267" cy="55" rx="5" ry="8" fill="#ffe066" opacity=".9"/>
-        <ellipse cx="267" cy="57" rx="3" ry="5" fill="#c084fc" opacity=".8"/></g>
-
-      <!-- glow under candles -->
-      <ellipse cx="200" cy="95" rx="90" ry="6" fill="#ffe066" opacity=".18"/>
-    </svg>
+  <div class="ten">
+    <span class="ten-d" id="d1">1</span>
+    <span class="ten-d" id="d0">0</span>
+    <span class="ten-lat">lat</span>
   </div>
+
+  <div class="msg-wrap">
+    <div class="msg">
+      <p>🎁 Ta strona jest <span class="hl">Twoja</span> — możesz zrobić z nią <span class="hl2">dosłownie wszystko</span>, co tylko podsunie Ci wyobraźnia.</p>
+      <p>Zmień kolory nieba, dodaj muzykę, stwórz grę, ukryj sekretną wiadomość — nie ma żadnych ograniczeń. Wszystko w Twoich rękach. 🚀</p>
+    </div>
+  </div>
+
 </div>
 
-<!-- sparkles -->
 <script>
-  // ── SPARKLES ──
-  const colors = ['#ff6b9d','#ffe066','#5bc8f5','#c084fc','#6ee7a0','#ff9b3d'];
-  for(let i = 0; i < 18; i++){
-    const s = document.createElement('div');
-    s.className = 'sparkle';
-    s.style.cssText = `
-      left:${Math.random()*100}vw;
-      top:${Math.random()*100}vh;
-      background:${colors[i%colors.length]};
-      --dur:${1.5+Math.random()*2.5}s;
-      --delay:${Math.random()*3}s;
-      width:${4+Math.random()*8}px;
-      height:${4+Math.random()*8}px;
-    `;
-    document.body.appendChild(s);
+// ═══════════════════════════════════════════════════════════
+//  ANIMATED TITLE — letter by letter
+// ═══════════════════════════════════════════════════════════
+function buildLine(elId, text, baseDelay) {
+  const el = document.getElementById(elId);
+  [...text].forEach((ch, i) => {
+    const s = document.createElement('span');
+    s.className = 'ch';
+    s.textContent = ch === ' ' ? '\u00a0' : ch;
+    s.style.animationDelay = (baseDelay + i * 0.055) + 's';
+    el.appendChild(s);
+  });
+}
+buildLine('l1', 'Wszystkiego Najlepszego', 0.1);
+buildLine('l2', 'Tymek!', 0.55);
+
+// ═══════════════════════════════════════════════════════════
+//  FIREWORKS ENGINE
+// ═══════════════════════════════════════════════════════════
+const canvas = document.getElementById('fw');
+const ctx    = canvas.getContext('2d');
+let W, H, dpr;
+
+function resize() {
+  dpr = window.devicePixelRatio || 1;
+  W = window.innerWidth;
+  H = window.innerHeight;
+  canvas.width  = W * dpr;
+  canvas.height = H * dpr;
+  canvas.style.width  = W + 'px';
+  canvas.style.height = H + 'px';
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+}
+resize();
+window.addEventListener('resize', resize);
+window.addEventListener('orientationchange', () => setTimeout(resize, 300));
+
+// colour palettes — each firework picks one
+const PALETTES = [
+  ['#ff6b9d','#ff9bc0','#ffb3d0','#fff'],      // rose
+  ['#ffe066','#ffb347','#ff7c2a','#fff'],       // gold
+  ['#5bc8f5','#a0e4ff','#e0f8ff','#fff'],       // sky
+  ['#c084fc','#e2b4ff','#f3d9ff','#fff'],       // violet
+  ['#6ee7a0','#a8f0c8','#d4fbe8','#fff'],       // mint
+  ['#f72585','#ff9f1c','#ffe066','#fff'],       // party
+  ['#00f5d4','#00bbf9','#9b5de5','#fff'],       // neon
+];
+
+// ── ANIMATED TWINKLING STARS ──
+const starCanvas = document.createElement('canvas');
+starCanvas.style.cssText = 'position:fixed;inset:0;z-index:1;pointer-events:none;';
+document.body.prepend(starCanvas);
+const sc = starCanvas.getContext('2d');
+let sdpr;
+
+const STARS = Array.from({ length: 280 }, () => ({
+  x: Math.random(),
+  y: Math.random(),
+  r: .3 + Math.random() * 1.6,
+  base: .15 + Math.random() * .7,
+  phase: Math.random() * Math.PI * 2,
+  speed: .008 + Math.random() * .025,
+  // occasional big sparkle
+  sparkle: Math.random() < .12
+}));
+
+function resizeStars() {
+  sdpr = window.devicePixelRatio || 1;
+  starCanvas.width  = window.innerWidth  * sdpr;
+  starCanvas.height = window.innerHeight * sdpr;
+  starCanvas.style.width  = window.innerWidth  + 'px';
+  starCanvas.style.height = window.innerHeight + 'px';
+  sc.setTransform(sdpr, 0, 0, sdpr, 0, 0);
+}
+resizeStars();
+window.addEventListener('resize', resizeStars);
+window.addEventListener('orientationchange', () => setTimeout(resizeStars, 300));
+
+// Fix 3: toRgba defined once at module scope
+function toRgba(col, a) {
+  if (col.startsWith('#')) {
+    const r = parseInt(col.slice(1,3),16);
+    const g = parseInt(col.slice(3,5),16);
+    const b = parseInt(col.slice(5,7),16);
+    return `rgba(${r},${g},${b},${a})`;
+  }
+  return col;
+}
+
+function drawStars() {
+  // Fix 1: use logical pixels (already scaled via setTransform)
+  const SW = window.innerWidth, SH = window.innerHeight;
+  sc.clearRect(0, 0, SW, SH);
+  STARS.forEach(s => {
+    s.phase += s.speed;
+    const alpha = s.base * (.5 + .5 * Math.sin(s.phase));
+    const px = s.x * SW, py = s.y * SH;
+
+    if (s.sparkle) {
+      // 4-point star shape for extra sparkle
+      const size = s.r * (1.5 + .8 * Math.sin(s.phase));
+      sc.save();
+      sc.translate(px, py);
+      sc.globalAlpha = alpha;
+      sc.fillStyle = '#fff';
+      sc.shadowColor = '#fff';
+      sc.shadowBlur = 8;
+      sc.beginPath();
+      for (let i = 0; i < 4; i++) {
+        const a = (i / 4) * Math.PI * 2;
+        const ai = a + Math.PI / 4;
+        sc.lineTo(Math.cos(a) * size, Math.sin(a) * size);
+        sc.lineTo(Math.cos(ai) * size * .25, Math.sin(ai) * size * .25);
+      }
+      sc.closePath();
+      sc.fill();
+      sc.restore();
+    } else {
+      sc.save();
+      sc.beginPath();
+      sc.arc(px, py, s.r, 0, Math.PI * 2);
+      sc.fillStyle = `rgba(255,255,255,${alpha})`;
+      sc.shadowColor = 'rgba(200,220,255,.8)';
+      sc.shadowBlur  = s.r > 1.1 ? 6 : 0;
+      sc.fill();
+      sc.restore();
+    }
+  });
+  requestAnimationFrame(drawStars);
+}
+drawStars();
+
+// ── PARTICLE ──
+class Particle {
+  constructor(x, y, color, angle, speed, type) {
+    this.x = x; this.y = y;
+    this.color = color;
+    this.type  = type; // 'spark' | 'glitter' | 'ring'
+
+    // random speed spread for natural look
+    const sp = speed * (.6 + Math.random() * .8);
+    this.vx = Math.cos(angle) * sp;
+    this.vy = Math.sin(angle) * sp;
+
+    this.alpha = 1;
+    this.r     = type === 'ring' ? 1.2 + Math.random() * 1.8
+                                 : 1.8 + Math.random() * 2.8;
+    this.decay = .012 + Math.random() * .018;
+    this.gravity = type === 'ring' ? .04 : .09;
+    this.trail = [];
+  }
+  update() {
+    this.trail.push({ x: this.x, y: this.y });
+    if (this.trail.length > 6) this.trail.shift();
+    this.vx *= .97;
+    this.vy *= .97;
+    this.vy  += this.gravity;
+    this.x   += this.vx;
+    this.y   += this.vy;
+    this.alpha -= this.decay;
+    this.r    *= .985;
+  }
+  draw() {
+    // trail
+    this.trail.forEach((pt, i) => {
+      const ta = Math.max(0, this.alpha * (i / this.trail.length) * .4);
+      ctx.beginPath();
+      ctx.arc(pt.x, pt.y, this.r * .5, 0, Math.PI*2);
+      ctx.fillStyle = toRgba(this.color, ta);
+      ctx.fill();
+    });
+
+    ctx.save();
+    ctx.globalAlpha = Math.max(0, this.alpha);
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+    ctx.fillStyle   = this.color;
+    ctx.shadowColor = this.color;
+    ctx.shadowBlur  = this.type === 'glitter' ? 12 : 6;
+    ctx.fill();
+    ctx.restore();
+  }
+  dead() { return this.alpha <= 0; }
+}
+
+// ── FIREWORK SHELL (rising rocket) ──
+class Shell {
+  constructor() { this.reset(); }
+  reset() {
+    this.x  = W * (.12 + Math.random() * .76);
+    this.y  = H + 6;
+    // target: upper 10–55% of screen
+    this.ty = H * (.1 + Math.random() * .45);
+    // speed to arrive in ~55 frames
+    const dist = this.y - this.ty;
+    this.vy  = -(dist / 55);
+    this.vx  = (Math.random() - .5) * 1.8;
+    this.pal = PALETTES[Math.floor(Math.random() * PALETTES.length)];
+    this.trail = [];
+    this.exploded  = false;
+    this.particles = [];
+    this.done = false;
+
+    // shape: 0=circle burst, 1=ring, 2=star, 3=double burst
+    this.shape = Math.floor(Math.random() * 4);
   }
 
-  // ── CONFETTI ──
-  const canvas = document.getElementById('confetti-canvas');
-  const ctx = canvas.getContext('2d');
-
-  function resize(){ canvas.width = innerWidth; canvas.height = innerHeight; }
-  resize();
-  window.addEventListener('resize', resize);
-
-  const COLORS = ['#ff6b9d','#ffe066','#5bc8f5','#c084fc','#6ee7a0','#ff9b3d','#fff','#ff4444'];
-  const SHAPES = ['rect','circle','tri'];
-
-  class Piece {
-    constructor(burst){
-      this.reset(burst);
-    }
-    reset(burst){
-      if(burst){
-        this.x = canvas.width / 2 + (Math.random()-0.5)*200;
-        this.y = canvas.height * 0.35 + (Math.random()-0.5)*80;
-        const angle = Math.random() * Math.PI * 2;
-        const speed = 4 + Math.random() * 10;
-        this.vx = Math.cos(angle) * speed;
-        this.vy = Math.sin(angle) * speed - 6;
-      } else {
-        this.x = Math.random() * canvas.width;
-        this.y = -20;
-        this.vx = (Math.random()-0.5) * 3;
-        this.vy = 2 + Math.random() * 4;
-      }
-      this.color = COLORS[Math.floor(Math.random()*COLORS.length)];
-      this.shape = SHAPES[Math.floor(Math.random()*SHAPES.length)];
-      this.size  = 6 + Math.random() * 10;
-      this.rot   = Math.random() * Math.PI * 2;
-      this.rotV  = (Math.random()-0.5) * 0.18;
-      this.alpha = 1;
-      this.alive = true;
-    }
-    update(){
+  update() {
+    if (!this.exploded) {
+      this.trail.push({ x: this.x, y: this.y });
+      if (this.trail.length > 14) this.trail.shift();
       this.x  += this.vx;
       this.y  += this.vy;
-      this.vy += 0.18;          // gravity
-      this.vx *= 0.995;
-      this.rot += this.rotV;
-      if(this.y > canvas.height + 30) this.alive = false;
+      this.vy += .14; // gravity on shell
+      if (this.y <= this.ty || this.vy >= 0) this.explode();
+    } else {
+      this.particles.forEach(p => p.update());
+      this.particles = this.particles.filter(p => !p.dead());
+      if (this.particles.length === 0) this.done = true;
     }
-    draw(){
-      ctx.save();
-      ctx.translate(this.x, this.y);
-      ctx.rotate(this.rot);
-      ctx.globalAlpha = this.alpha;
-      ctx.fillStyle = this.color;
-      if(this.shape === 'rect'){
-        ctx.fillRect(-this.size/2, -this.size/4, this.size, this.size/2);
-      } else if(this.shape === 'circle'){
-        ctx.beginPath();
-        ctx.arc(0, 0, this.size/2, 0, Math.PI*2);
-        ctx.fill();
-      } else {
-        ctx.beginPath();
-        ctx.moveTo(0, -this.size/2);
-        ctx.lineTo(this.size/2, this.size/2);
-        ctx.lineTo(-this.size/2, this.size/2);
-        ctx.closePath();
-        ctx.fill();
+  }
+
+  explode() {
+    this.exploded = true;
+    const cx = this.x, cy = this.y;
+
+    if (this.shape === 1) {
+      // RING — particles only along circumference
+      const n = 60 + Math.floor(Math.random() * 20);
+      for (let i = 0; i < n; i++) {
+        const a = (i / n) * Math.PI * 2;
+        const sp = 3.5 + Math.random() * 1.5;
+        this.particles.push(
+          new Particle(cx, cy, this.pal[Math.floor(Math.random() * this.pal.length)], a, sp, 'ring')
+        );
       }
-      ctx.restore();
+    } else if (this.shape === 2) {
+      // STAR — 5 or 6 arms of denser particles
+      const arms = Math.random() < .5 ? 5 : 6;
+      const total = 70 + Math.floor(Math.random() * 30);
+      for (let i = 0; i < total; i++) {
+        const arm = Math.floor(Math.random() * arms);
+        const armAngle = (arm / arms) * Math.PI * 2;
+        const spread = (Math.random() - .5) * .5;
+        const sp = 2 + Math.random() * 5.5;
+        const col = this.pal[Math.floor(Math.random() * this.pal.length)];
+        this.particles.push(new Particle(cx, cy, col, armAngle + spread, sp, 'spark'));
+      }
+      // centre glitter
+      for (let i = 0; i < 20; i++) {
+        this.particles.push(
+          new Particle(cx, cy, '#fff', Math.random()*Math.PI*2, .5+Math.random()*2, 'glitter')
+        );
+      }
+    } else if (this.shape === 3) {
+      // DOUBLE burst — two concentric shells
+      [4, 7].forEach(speed => {
+        const n = 45 + Math.floor(Math.random() * 20);
+        const col = this.pal[Math.floor(Math.random() * this.pal.length)];
+        for (let i = 0; i < n; i++) {
+          const a = (i / n) * Math.PI * 2;
+          this.particles.push(new Particle(cx, cy, col, a, speed, 'spark'));
+        }
+      });
+    } else {
+      // DEFAULT circle burst
+      const n = 80 + Math.floor(Math.random() * 50);
+      for (let i = 0; i < n; i++) {
+        const a  = (i / n) * Math.PI * 2 + (Math.random() - .5) * .3;
+        const sp = 2 + Math.random() * 6;
+        const col = this.pal[Math.floor(Math.random() * this.pal.length)];
+        const type = Math.random() < .15 ? 'glitter' : 'spark';
+        this.particles.push(new Particle(cx, cy, col, a, sp, type));
+      }
     }
   }
 
-  let pieces = [];
-
-  // initial burst
-  for(let i=0;i<120;i++) pieces.push(new Piece(true));
-  // then trickle
-  setInterval(()=>{
-    for(let i=0;i<3;i++) pieces.push(new Piece(false));
-    pieces = pieces.filter(p=>p.alive);
-  }, 200);
-
-  function loop(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    pieces.forEach(p=>{ p.update(); p.draw(); });
-    requestAnimationFrame(loop);
+  draw() {
+    if (!this.exploded) {
+      // glowing trail
+      this.trail.forEach((pt, i) => {
+        const a = (i / this.trail.length) * .8;
+        ctx.save();
+        ctx.globalAlpha = a;
+        ctx.beginPath();
+        ctx.arc(pt.x, pt.y, Math.max(0.1, 2.5 - 1.5 * (1 - i/this.trail.length)), 0, Math.PI*2);
+        ctx.fillStyle   = '#ffe8a0';
+        ctx.shadowColor = '#ffe8a0';
+        ctx.shadowBlur  = 8;
+        ctx.fill();
+        ctx.restore();
+      });
+      // shell dot
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, 3, 0, Math.PI*2);
+      ctx.fillStyle   = '#fff';
+      ctx.shadowColor = '#fff';
+      ctx.shadowBlur  = 12;
+      ctx.fill();
+      ctx.restore();
+    } else {
+      this.particles.forEach(p => p.draw());
+    }
   }
-  loop();
+}
+
+// ── LAUNCH SCHEDULE ──
+let shells = [];
+
+function launch(count = 1) {
+  for (let i = 0; i < count; i++) {
+    setTimeout(() => shells.push(new Shell()), i * 180);
+  }
+}
+
+// immediate opening burst
+setTimeout(() => launch(3), 300);
+setTimeout(() => launch(2), 1200);
+setTimeout(() => launch(2), 2400);
+
+// ongoing random launches
+setInterval(() => {
+  const n = 1 + Math.floor(Math.random() * 2);
+  launch(n);
+}, 1400);
+
+// ── RENDER LOOP ──
+function loop() {
+  // fade rather than clear — creates motion trails on the dark bg
+  ctx.fillStyle = 'rgba(7,7,26,.18)';
+  ctx.fillRect(0, 0, W, H);
+
+  shells = shells.filter(s => !s.done);
+  shells.forEach(s => { s.update(); s.draw(); });
+
+  requestAnimationFrame(loop);
+}
+loop();
 </script>
 </body>
 </html>
